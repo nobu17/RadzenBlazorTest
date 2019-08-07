@@ -1,0 +1,51 @@
+﻿@page "/datagrid_sample"
+
+<h3>DataGrid Sample</h3>
+
+@if (@persons == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <RadzenGrid AllowFiltering="true" AllowPaging="true" PageSize="4" AllowSorting="true" Data="@(persons)" TItem="Person" RowSelect="RowSelect">
+        <Columns>
+            <RadzenGridColumn TItem="Person" Property="Name" Title="Name" Type="string" />
+            <RadzenGridColumn TItem="Person" Property="Age" Title="Age" Type="integer" />
+            <RadzenGridColumn TItem="Person" Property="Birthdate" Title="Birth Date" Format="date-time" FormatString="{0:yyyy/MM/dd HH:mm:ss}">
+            </RadzenGridColumn>
+        </Columns>
+    </RadzenGrid>
+
+    if (@selectedPerson != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+
+                <div>@selectedPerson.Name が選択されました。</div>
+
+            </div>
+        </div>
+    }
+}
+
+@code {
+    public class Person
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public DateTime Birthdate { get; set; }
+    }
+    Person selectedPerson = null;
+    IEnumerable<Person> persons = null;
+
+    protected override void OnInit()
+    {
+        persons = Enumerable.Range(0, 10).Select(p => new Person() { Name = p + "さん", Age = p + 10, Birthdate = DateTime.Now });
+    }
+
+    void RowSelect(Person p)
+    {
+        selectedPerson = p;
+    }
+}

@@ -1,0 +1,19 @@
+﻿@inject Radzen.DialogService dialogService
+
+<div class="row">
+    <div class="col-md-12" style="height:200px;">
+        <div>@Message</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <RadzenButton Click="@((args) => dialogService.Close(true))" Text="OK" Style="margin-bottom: 10px; width: 150px" />
+        <RadzenButton Click="@((args) => dialogService.Close(false))" ButtonStyle="secondary" Text="Cancel" Style="margin-bottom: 10px; width: 150px" />
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string Message { get; set; }
+}

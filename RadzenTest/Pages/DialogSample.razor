@@ -1,0 +1,41 @@
+﻿@page "/dialog_sample"
+
+@inject Radzen.DialogService dialogService
+
+<RadzenDialog />
+<h3>DialogSample</h3>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>OpenDialog</h3>
+        <RadzenButton Click="Click" Text="Open" Style="margin-bottom: 20px; width: 150px" />
+        <br />
+        @resultText
+    </div>
+</div>
+
+
+@code {
+
+    string resultText = "";
+
+    protected override void OnInit()
+    {
+        dialogService.OnClose += OnClose;
+    }
+
+    void Click()
+    {
+        var dParam = new Dictionary<string, object>() { { "Message", "メッセージ" } };
+        var dOpt = new Radzen.DialogOptions() { Width = "500px", Height = "300px", Left = "30%", Top = "20%" };
+        dialogService.Open<TestDialog>("タイトル", dParam, dOpt);
+    }
+
+    void OnClose(dynamic result)
+    {
+        resultText = result.ToString();
+        // 変更通知
+        Invoke(() => { StateHasChanged(); });
+    }
+}
