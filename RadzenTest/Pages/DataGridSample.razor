@@ -47,5 +47,7 @@ else
     void RowSelect(Person p)
     {
         selectedPerson = p;
+        // 変更通知
+        Invoke(() => { StateHasChanged(); });
     }
 }
